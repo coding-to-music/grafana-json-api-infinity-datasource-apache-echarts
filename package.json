@@ -1,0 +1,17 @@
+{
+  "name": "grafana-json-api-infinity-datasource-apache-echarts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "docker:build": "docker-compose build",
+    "start": "docker-compose pull && docker-compose up --remove-orphans",
+    "stop": "docker-compose down",
+    "deploy": "git add . && git commit -m Build && git push",
+    "clean": "bash ./purge-all.sh",    
+    "upgrade": "yarn upgrade --latest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
