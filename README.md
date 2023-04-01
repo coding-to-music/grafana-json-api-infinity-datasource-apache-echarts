@@ -27,3 +27,12 @@ git branch -M main
 git remote add origin git@github.com:coding-to-music/grafana-json-api-infinity-datasource-apache-echarts.git
 git push -u origin main
 ```
+
+## start stand-alone Grafana via docker
+
+```
+docker run -d -p 3000:3000 --name grafana grafana/grafana:latest
+```
+
+##
+
