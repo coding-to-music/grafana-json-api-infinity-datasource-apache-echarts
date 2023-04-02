@@ -13,12 +13,21 @@ services:
       - GF_AUTH_BASIC_ENABLED=false
       - GF_ENABLE_GZIP=true
       - GF_USERS_DEFAULT_THEME=dark
-      - GF_INSTALL_PLUGINS=volkovlabs-echarts-panel
-      # - GF_INSTALL_PLUGINS=grafana-infinity-datasource,volkovlabs-echarts-panel,grafana-json-datasource
+      - GF_PATHS_PLUGINS=/var/lib/grafana/plugins
     volumes:
       - ./provisioning:/etc/grafana/provisioning
       - ./dashboards:/var/lib/grafana/dashboards
       - grafana_data:/var/lib/grafana  
+      - ./plugins.txt:/plugins.txt
+      - grafana_plugins:/var/lib/grafana/plugins
 
 volumes:
   grafana_data:
+  grafana_plugins:  
+
+
+      # - GF_INSTALL_PLUGINS=volkovlabs-echarts-panel
+      # - GF_INSTALL_PLUGINS=grafana-infinity-datasource
+      # - GF_INSTALL_PLUGINS=grafana-json-datasource
+
+      # - GF_INSTALL_PLUGINS=grafana-infinity-datasource,volkovlabs-echarts-panel,grafana-json-datasource
