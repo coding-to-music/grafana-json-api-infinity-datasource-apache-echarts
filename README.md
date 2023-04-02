@@ -209,3 +209,21 @@ return {
   series,
 };
 ```
+
+# Use the grafana-cli tool to list all installed plugins and data sources in your Grafana instance.
+
+## To list installed plugins, run the following command:
+
+```
+docker-compose exec grafana grafana-cli plugins ls
+```
+
+This will output a list of all the plugins installed in your Grafana instance, along with their versions.
+
+## To list installed data sources, run the following command:
+
+```
+docker-compose exec grafana grafana-cli datasources list
+```
+
+This will output a list of all the data sources installed in your Grafana instance, along with their types and IDs.
