@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.7"
 
 services:
 
@@ -13,6 +13,12 @@ services:
       - GF_AUTH_BASIC_ENABLED=false
       - GF_ENABLE_GZIP=true
       - GF_USERS_DEFAULT_THEME=dark
-    # volumes:
-      # - ./provisioning:/etc/grafana/provisioning
+      - GF_INSTALL_PLUGINS=volkovlabs-echarts-panel
+      # - GF_INSTALL_PLUGINS=grafana-infinity-datasource,volkovlabs-echarts-panel,grafana-json-datasource
+    volumes:
+      - ./provisioning:/etc/grafana/provisioning
+      - ./dashboards:/var/lib/grafana/dashboards
+      - grafana_data:/var/lib/grafana  
 
+volumes:
+  grafana_data:

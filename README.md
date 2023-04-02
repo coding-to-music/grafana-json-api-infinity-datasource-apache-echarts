@@ -10,9 +10,9 @@ From / By https://www.youtube.com/watch?v=B4Uj1n4Cr88&ab_channel=VolkovLabs
 
 https://github.com/yesoreyeram/grafana-infinity-datasource (Infinity Datasource)
 
-https://github.com/VolkovLabs/volkovlabs-echarts-panel (Apache ECharts)
+https://github.com/VolkovLabs/volkovlabs-echarts-panel (Apache ECharts Plugin)
 
-https://github.com/grafana/grafana-json-datasource  (JSON API)
+https://github.com/grafana/grafana-json-datasource  (JSON API Plugin)
 
 ## Environment variables:
 

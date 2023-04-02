@@ -6,9 +6,10 @@
   "scripts": {
     "docker:build": "docker-compose build",
     "start": "docker-compose pull && docker-compose up --remove-orphans",
+    "resume": "docker-compose up --remove-orphans",
     "stop": "docker-compose down",
     "deploy": "git add . && git commit -m Build && git push",
-    "clean": "bash ./purge-all.sh",    
+    "clean": "bash ./purge-all.sh",
     "upgrade": "yarn upgrade --latest"
   },
   "keywords": [],
