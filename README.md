@@ -218,6 +218,13 @@ return {
 docker-compose exec grafana grafana-cli plugins ls
 ```
 
+Output
+
+```
+installed plugins:
+volkovlabs-echarts-panel @ 4.2.0
+```
+
 This will output a list of all the plugins installed in your Grafana instance, along with their versions.
 
 ## To list installed data sources, run the following command:
