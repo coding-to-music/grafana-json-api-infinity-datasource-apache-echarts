@@ -15,12 +15,25 @@ services:
       - GF_USERS_DEFAULT_THEME=dark
       - GF_INSTALL_PLUGINS=volkovlabs-echarts-panel
       - GF_PATHS_PLUGINS=/var/lib/grafana/plugins
+      - GF_DEFAULT_APP_MODE=development
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/provisioning/dashboards/echarts/home.json
+      - GF_INSTALL_PLUGINS=marcusolsson-static-datasource,golioth-websocket-datasource
     volumes:
       - ./provisioning:/etc/grafana/provisioning
       - ./dashboards:/var/lib/grafana/dashboards
       - grafana_data:/var/lib/grafana  
       - ./plugins.txt:/plugins.txt
       - grafana_plugins:/var/lib/grafana/plugins
+      - ./dist:/var/lib/grafana/plugins/volkovlabs-echarts-panel
+      - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
+
+    # volumes:
+    #   - ./dist:/var/lib/grafana/plugins/volkovlabs-echarts-panel
+    #   - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
+      # Uncomment to preserve Grafana configuration
+      # - ./data:/var/lib/grafana
+
+
 
 volumes:
   grafana_data:
