@@ -4,7 +4,7 @@ datasources:
   - name: Redis
     type: redis-datasource
     access: proxy
-    orgId: 1
+    orgId: 2
     isDefault: true
     version: 1
     url: redis:6379

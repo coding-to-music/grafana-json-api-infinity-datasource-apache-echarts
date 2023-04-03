@@ -13,7 +13,7 @@ datasources:
     type: golioth-websocket-datasource
     uid: LWj8ert4k
     access: proxy
-    orgId: 1
+    orgId: 2
     version: 1
     editable: true
     jsonData:
