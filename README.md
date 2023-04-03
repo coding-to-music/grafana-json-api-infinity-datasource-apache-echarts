@@ -25,6 +25,7 @@ https://grafana.com/grafana/plugins/marcusolsson-static-datasource/
 ## user interfaces:
 
 - Grafana http://localhost:3000
+- Grafana http://localhost:4000
 
 ## GitHub
 
