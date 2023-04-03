@@ -24,11 +24,10 @@ services:
       - grafana_data:/var/lib/grafana  
       - ./plugins.txt:/plugins.txt
       - grafana_plugins:/var/lib/grafana/plugins
-      - ./dist:/var/lib/grafana/plugins/volkovlabs-echarts-panel
+      # - ./dist:/var/lib/grafana/plugins/volkovlabs-echarts-panel
       - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
 
     # volumes:
-    #   - ./dist:/var/lib/grafana/plugins/volkovlabs-echarts-panel
     #   - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
       # Uncomment to preserve Grafana configuration
       # - ./data:/var/lib/grafana

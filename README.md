@@ -14,6 +14,8 @@ https://github.com/VolkovLabs/volkovlabs-echarts-panel (Apache ECharts Plugin)
 
 https://github.com/grafana/grafana-json-datasource  (JSON API Plugin)
 
+https://grafana.com/grafana/plugins/marcusolsson-static-datasource/
+
 ## Environment variables:
 
 ```java
@@ -234,3 +236,8 @@ docker-compose exec grafana grafana-cli datasources list
 ```
 
 This will output a list of all the data sources installed in your Grafana instance, along with their types and IDs.
+
+## Static Data Source for Grafana
+
+https://grafana.com/grafana/plugins/marcusolsson-static-datasource/
+
