@@ -225,6 +225,8 @@ Output
 
 ```
 installed plugins:
+golioth-websocket-datasource @ 1.0.2
+marcusolsson-static-datasource @ 2.2.0
 volkovlabs-echarts-panel @ 4.2.0
 ```
 
@@ -242,3 +244,10 @@ This will output a list of all the data sources installed in your Grafana instan
 
 https://grafana.com/grafana/plugins/marcusolsson-static-datasource/
 
+## Ensure all datasources and plugins are installed 
+
+https://github.com/yesoreyeram/grafana-infinity-datasource (Infinity Datasource)
+
+https://github.com/VolkovLabs/volkovlabs-echarts-panel (Apache ECharts Plugin)
+
+https://github.com/grafana/grafana-json-datasource  (JSON API Plugin)
