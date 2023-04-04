@@ -234,6 +234,8 @@ This will output a list of all the plugins installed in your Grafana instance, a
 
 ## To list installed data sources, run the following command:
 
+This does not work - the cli does not provide this
+
 ```
 docker-compose exec grafana grafana-cli datasources list
 ```
@@ -250,7 +252,27 @@ https://github.com/VolkovLabs/volkovlabs-echarts-panel (Apache ECharts Plugin)
 
 ### These need to be installed using the AKA names specified 
 
+```
+- GF_INSTALL_PLUGINS=marcusolsson-static-datasource,golioth-websocket-datasource,volkovlabs-echarts-panel,marcusolsson-json-datasource,yesoreyeram-infinity-datasource
+```
+
 https://github.com/yesoreyeram/grafana-infinity-datasource (Infinity Datasource) (AKA yesoreyeram-infinity-datasource)
 
 https://github.com/grafana/grafana-json-datasource  (JSON API Plugin) (AKA marcusolsson-json-datasource)
 
+## To list installed plugins, run the following command:
+
+```
+docker-compose exec grafana grafana-cli plugins ls
+```
+
+Output
+
+```
+installed plugins:
+golioth-websocket-datasource @ 1.0.2
+marcusolsson-json-datasource @ 1.3.4
+marcusolsson-static-datasource @ 2.2.0
+volkovlabs-echarts-panel @ 4.2.0
+yesoreyeram-infinity-datasource @ 1.3.0
+```
