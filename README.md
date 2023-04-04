@@ -276,3 +276,408 @@ marcusolsson-static-datasource @ 2.2.0
 volkovlabs-echarts-panel @ 4.2.0
 yesoreyeram-infinity-datasource @ 1.3.0
 ```
+
+## Best way to start and continue calling OpenWeather APIs
+
+https://openweathermap.org/appid
+
+API key is everything you need to call for weather data
+
+Please, use your API key in every API call you make. Our platform only processes the API requests with an API key included. The API keys linked to your account are used to take count of the calls you make to OpenWeather platform.
+
+Example on how to make an API call using your API key
+
+API call
+
+```
+http://api.openweathermap.org/data/2.5/forecast?id=524901&appid={API key}
+```
+
+- Parameters
+
+`appid`	required	Your unique API key (you can always find it on your account page under the "API key" tab)
+Example of API call
+
+```
+api.openweathermap.org/data/2.5/forecast?id=524901&appid={API key}
+```
+
+## Geocoding API 
+
+is a simple tool that we have developed to ease the search for locations while working with geographic names and coordinates.
+
+Supporting API calls by geographical coordinates is the most accurate way to specify any location, that is why this method is integrated in all OpenWeather APIs. However, this way is not always suitable for all users.
+Geocoding is the process of transformation of any location name into geographical coordinates, and the other way around (reverse geocoding). OpenWeather’s Geocoding API supports both the direct and reverse methods, working at the level of city names, areas and districts, countries and states:
+
+- Direct geocoding converts the specified name of a location or zip/post code into the exact geographical coordinates;
+- Reverse geocoding converts the geographical coordinates into the names of the nearby locations.
+
+## Direct geocoding
+
+Direct geocoding allows to get geographical coordinates (lat, lon) by using name of the location (city name or area name). If you use the limit parameter in the API call, you can cap how many locations with the same name will be seen in the API response (for instance, London in the UK and London in the US).
+
+## Coordinates by location name
+
+## How to make an API call
+
+API call
+
+```
+http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
+```
+
+## Parameters
+- `q`	required	City name, state code (only for the US) and country code divided by comma. Please use ISO 3166 country codes.
+- `appid`	required	Your unique API key (you can always find it on your account page under the "API key" tab)
+- `limit`	optional	Number of the locations in the API response (up to 5 results can be returned in the API response)
+
+Example of API call
+
+http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid={API key}
+
+## Example of API response
+              
+```
+[
+  {
+    "name": "London",
+    "local_names": {
+      "af": "Londen",
+      "ar": "لندن",
+      "ascii": "London",
+      "az": "London",
+      "bg": "Лондон",
+      "ca": "Londres",
+      "da": "London",
+      "de": "London",
+      "el": "Λονδίνο",
+      "en": "London",
+      "eu": "Londres",
+      "fa": "لندن",
+      "feature_name": "London",
+      "fi": "Lontoo",
+      "fr": "Londres",
+      "gl": "Londres",
+      "he": "לונדון",
+      "hi": "लंदन",
+      "hr": "London",
+      "hu": "London",
+      "id": "London",
+      "it": "Londra",
+      "ja": "ロンドン",
+      "la": "Londinium",
+      "lt": "Londonas",
+      "mk": "Лондон",
+      "nl": "Londen",
+      "no": "London",
+      "pl": "Londyn",
+      "pt": "Londres",
+      "ro": "Londra",
+      "ru": "Лондон",
+      "sk": "Londýn",
+      "sl": "London",
+      "sr": "Лондон",
+      "th": "ลอนดอน",
+      "tr": "Londra",
+      "vi": "Luân Đôn",
+      "zu": "ILondon"
+    },
+    "lat": 51.5085,
+    "lon": -0.1257,
+    "country": "GB"
+  },
+  {
+    "name": "London",
+    "local_names": {
+      "ar": "لندن",
+      "ascii": "London",
+      "bg": "Лондон",
+      "de": "London",
+      "en": "London",
+      "fa": "لندن، انتاریو",
+      "feature_name": "London",
+      "fi": "London",
+      "fr": "London",
+      "he": "לונדון",
+      "ja": "ロンドン",
+      "lt": "Londonas",
+      "nl": "London",
+      "pl": "London",
+      "pt": "London",
+      "ru": "Лондон",
+      "sr": "Лондон"
+    },
+    "lat": 42.9834,
+    "lon": -81.233,
+    "country": "CA"
+  },
+  {
+    "name": "London",
+    "local_names": {
+      "ar": "لندن",
+      "ascii": "London",
+      "en": "London",
+      "fa": "لندن، اوهایو",
+      "feature_name": "London",
+      "sr": "Ландон"
+    },
+    "lat": 39.8865,
+    "lon": -83.4483,
+    "country": "US",
+    "state": "OH"
+  },
+  {
+    "name": "London",
+    "local_names": {
+      "ar": "لندن",
+      "ascii": "London",
+      "en": "London",
+      "fa": "لندن، کنتاکی",
+      "feature_name": "London",
+      "sr": "Ландон"
+    },
+    "lat": 37.129,
+    "lon": -84.0833,
+    "country": "US",
+    "state": "KY"
+  },
+  {
+    "name": "London",
+    "local_names": {
+      "ascii": "London",
+      "ca": "Londres",
+      "en": "London",
+      "feature_name": "London"
+    },
+    "lat": 36.4761,
+    "lon": -119.4432,
+    "country": "US",
+    "state": "CA"
+  }
+]
+```
+              
+## Fields in API response
+
+Please note that the fields present will vary based on a country to which a location belongs as well as a specific location.
+
+- name Name of the found location
+- local_names
+- local_names.[language code] Name of the found location in different languages. The list of names can be different for different locations
+- local_names.ascii Internal field
+- local_names.feature_name Internal field
+- lat Geographical coordinates of the found location (latitude)
+- lon Geographical coordinates of the found location (longitude)
+- country Country of the found location
+- state (where available) State of the found location
+- Coordinates by zip/post code
+
+## How to make an API call
+
+```
+http://api.openweathermap.org/geo/1.0/zip?zip={zip code},{country code}&appid={API key}
+```
+
+Parameters
+zip code	required	Zip/post code and country code divided by comma. Please use ISO 3166 country codes.
+appid	required	Your unique API key (you can always find it on your account page under the "API key" tab)
+
+## Example of API call
+
+```
+http://api.openweathermap.org/geo/1.0/zip?zip=E14,GB&appid={API key}
+```
+
+## Example of API response                
+
+```
+{
+  "zip": "90210",
+  "name": "Beverly Hills",
+  "lat": 34.0901,
+  "lon": -118.4065,
+  "country": "US"
+}
+```
+              
+## Fields in API response
+
+- `zip` Specified zip/post code in the API request
+- `name` Name of the found area
+- `lat` Geographical coordinates of the centroid of found zip/post code (latitude)
+- `lon` Geographical coordinates of the centroid of found zip/post code (longitude)
+- `country` Country of the found zip/post code
+
+## Reverse geocoding
+
+Reverse geocoding allows to get name of the location (city name or area name) by using geografical coordinates (lat, lon). The limit parameter in the API call allows you to cap how many location names you will see in the API response.
+
+## How to make an API call
+
+```
+http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API key}
+```
+
+Parameters
+
+- lat, lon	required	Geographical coordinates (latitude, longitude)
+- appid	required	Your unique API key (you can always find it on your account page under the "API key" tab)
+- limit	optional	Number of the location names in the API response (several results can be returned in the API response)
+
+## Example of API call
+
+```
+http://api.openweathermap.org/geo/1.0/reverse?lat=51.5098&lon=-0.1180&limit=5&appid={API key}
+```
+
+## Example of API response
+
+
+```
+  [
+  {
+    "name": "City of London",
+    "local_names": {
+      "ar": "مدينة لندن",
+      "ascii": "City of London",
+      "bg": "Сити",
+      "ca": "La City",
+      "de": "London City",
+      "el": "Σίτι του Λονδίνου",
+      "en": "City of London",
+      "fa": "سیتی لندن",
+      "feature_name": "City of London",
+      "fi": "Lontoon City",
+      "fr": "Cité de Londres",
+      "gl": "Cidade de Londres",
+      "he": "הסיטי של לונדון",
+      "hi": "सिटी ऑफ़ लंदन",
+      "id": "Kota London",
+      "it": "Londra",
+      "ja": "シティ・オブ・ロンドン",
+      "la": "Civitas Londinium",
+      "lt": "Londono Sitis",
+      "pt": "Cidade de Londres",
+      "ru": "Сити",
+      "sr": "Сити",
+      "th": "นครลอนดอน",
+      "tr": "Londra Şehri",
+      "vi": "Thành phố Luân Đôn",
+      "zu": "Idolobha weLondon"
+    },
+    "lat": 51.5128,
+    "lon": -0.0918,
+    "country": "GB"
+  },
+  {
+    "name": "London",
+    "local_names": {
+      "af": "Londen",
+      "ar": "لندن",
+      "ascii": "London",
+      "az": "London",
+      "bg": "Лондон",
+      "ca": "Londres",
+      "da": "London",
+      "de": "London",
+      "el": "Λονδίνο",
+      "en": "London",
+      "eu": "Londres",
+      "fa": "لندن",
+      "feature_name": "London",
+      "fi": "Lontoo",
+      "fr": "Londres",
+      "gl": "Londres",
+      "he": "לונדון",
+      "hi": "लंदन",
+      "hr": "London",
+      "hu": "London",
+      "id": "London",
+      "it": "Londra",
+      "ja": "ロンドン",
+      "la": "Londinium",
+      "lt": "Londonas",
+      "mk": "Лондон",
+      "nl": "Londen",
+      "no": "London",
+      "pl": "Londyn",
+      "pt": "Londres",
+      "ro": "Londra",
+      "ru": "Лондон",
+      "sk": "Londýn",
+      "sl": "London",
+      "sr": "Лондон",
+      "th": "ลอนดอน",
+      "tr": "Londra",
+      "vi": "Luân Đôn",
+      "zu": "ILondon"
+    },
+    "lat": 51.5085,
+    "lon": -0.1257,
+    "country": "GB"
+  },
+  {
+    "name": "Islington",
+    "local_names": {
+      "ascii": "Islington",
+      "az": "İslinqton",
+      "fa": "ایزلینتن",
+      "feature_name": "Islington",
+      "fr": "District londonien d'Islington",
+      "he": "איזלינגטון",
+      "ja": "イズリントン",
+      "ru": "Ислингтон"
+    },
+    "lat": 51.5362,
+    "lon": -0.103,
+    "country": "GB"
+  },
+  {
+    "name": "Lewisham",
+    "local_names": {
+      "ascii": "Lewisham",
+      "de": "London Borough of Lewisham",
+      "en": "Lewisham",
+      "feature_name": "Lewisham",
+      "fi": "Lewisham",
+      "fr": "Lewisham",
+      "hu": "Lewisham kerület",
+      "nl": "Lewisham",
+      "no": "Lewisham",
+      "ro": "Lewisham"
+    },
+    "lat": 51.4535,
+    "lon": -0.018,
+    "country": "GB"
+  },
+  {
+    "name": "Islington",
+    "local_names": {
+      "ascii": "Islington",
+      "de": "London Borough of Islington",
+      "en": "Islington",
+      "feature_name": "Islington",
+      "fr": "Islington",
+      "nl": "Islington",
+      "no": "Islington",
+      "ro": "Islington"
+    },
+    "lat": 51.547,
+    "lon": -0.1094,
+    "country": "GB"
+  }
+]
+```
+                  
+## Fields in API response
+
+Please note that the fields present will vary based on a country to which a location belongs as well as a specific location.
+name Name of the found location
+- `local_names`
+- `local_names.[language code]` Name of the found location in different languages. The list of names can be different for different locations.
+- `local_names.ascii` Internal field
+- `local_names.feature_name` Internal field
+- `lat` Geographical coordinates of the found location (latitude)
+- `lon` Geographical coordinates of the found location (longitude)
+- `country` Country of the found location
+- `state` (where available) State of the found location
