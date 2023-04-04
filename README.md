@@ -318,12 +318,18 @@ Direct geocoding allows to get geographical coordinates (lat, lon) by using name
 
 ## Coordinates by location name
 
+```json
+{"zip":"02109","name":"Boston","lat":42.36,"lon":-71.0545,"country":"US"}
+```
+
 ## How to make an API call
 
 API call
 
 ```
 http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
+
+http://api.openweathermap.org/geo/1.0/direct?q=Boston,MA,USA&limit=50&appid={API key}
 ```
 
 ## Parameters
