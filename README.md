@@ -8,11 +8,11 @@ https://github.com/coding-to-music/grafana-json-api-infinity-datasource-apache-e
 
 From / By https://www.youtube.com/watch?v=B4Uj1n4Cr88&ab_channel=VolkovLabs
 
-https://github.com/yesoreyeram/grafana-infinity-datasource (Infinity Datasource)
-
 https://github.com/VolkovLabs/volkovlabs-echarts-panel (Apache ECharts Plugin)
 
-https://github.com/grafana/grafana-json-datasource  (JSON API Plugin)
+https://github.com/yesoreyeram/grafana-infinity-datasource (Infinity Datasource) (AKA yesoreyeram-infinity-datasource)
+
+https://github.com/grafana/grafana-json-datasource  (JSON API Plugin) (AKA marcusolsson-json-datasource)
 
 https://grafana.com/grafana/plugins/marcusolsson-static-datasource/
 
@@ -246,8 +246,11 @@ https://grafana.com/grafana/plugins/marcusolsson-static-datasource/
 
 ## Ensure all datasources and plugins are installed 
 
-https://github.com/yesoreyeram/grafana-infinity-datasource (Infinity Datasource)
-
 https://github.com/VolkovLabs/volkovlabs-echarts-panel (Apache ECharts Plugin)
 
-https://github.com/grafana/grafana-json-datasource  (JSON API Plugin)
+### These need to be installed using the AKA names specified 
+
+https://github.com/yesoreyeram/grafana-infinity-datasource (Infinity Datasource) (AKA yesoreyeram-infinity-datasource)
+
+https://github.com/grafana/grafana-json-datasource  (JSON API Plugin) (AKA marcusolsson-json-datasource)
+
