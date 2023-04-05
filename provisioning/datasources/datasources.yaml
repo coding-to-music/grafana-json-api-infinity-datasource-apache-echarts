@@ -18,3 +18,23 @@ datasources:
     editable: true
     jsonData:
       host: ws://host.docker.internal:8080
+  - name: My InfluxDB
+    type: influxdb
+    access: proxy
+    url: http://localhost:8086
+    database: mydatabase
+    user: myuser
+    password: mypassword
+    basicAuth: true
+    basicAuthUser: myuser
+    basicAuthPassword: mypassword
+    jsonData:
+      httpMode: GET
+      timeInterval: "5s"
+      version: "Flux"
+    secureJsonData:
+      sslCertPath: ""
+      sslKeyPath: ""
+      sslCert: ""
+      sslKey: ""
+      sslCa: ""

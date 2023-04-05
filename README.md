@@ -67,6 +67,8 @@ git push -u origin main
 - Volkov Labs specializes in developing plugins to use Grafana as a Platform. Trusted by the Community.
 - 👉 GitHub for issues and questions: https://github.com/VolkovLabs
 
+![Open Weather Map Grafana](images/OpenWeatherMap.jpg)
+
 ## start stand-alone Grafana via docker
 
 ```
@@ -326,6 +328,11 @@ http://api.openweathermap.org/geo/1.0/zip?zip="02109",US&appid={API key}
 {"zip":"02109","name":"Boston","lat":42.36,"lon":-71.0545,"country":"US"}
 ```
 
+## Gathering weather data
+
+https://api.openweathermap.org/data/2.5/weather?units=metric&lat=latitude&lon=longitude&appid=apiKey
+
+
 ## How to make an API call
 
 API call
@@ -369,87 +376,10 @@ http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid={API key}
       "fr": "Londres",
       "gl": "Londres",
       "he": "לונדון",
-      "hi": "लंदन",
-      "hr": "London",
-      "hu": "London",
-      "id": "London",
-      "it": "Londra",
-      "ja": "ロンドン",
-      "la": "Londinium",
-      "lt": "Londonas",
-      "mk": "Лондон",
-      "nl": "Londen",
-      "no": "London",
-      "pl": "Londyn",
-      "pt": "Londres",
-      "ro": "Londra",
-      "ru": "Лондон",
-      "sk": "Londýn",
-      "sl": "London",
-      "sr": "Лондон",
-      "th": "ลอนดอน",
-      "tr": "Londra",
-      "vi": "Luân Đôn",
-      "zu": "ILondon"
     },
     "lat": 51.5085,
     "lon": -0.1257,
     "country": "GB"
-  },
-  {
-    "name": "London",
-    "local_names": {
-      "ar": "لندن",
-      "ascii": "London",
-      "bg": "Лондон",
-      "de": "London",
-      "en": "London",
-      "fa": "لندن، انتاریو",
-      "feature_name": "London",
-      "fi": "London",
-      "fr": "London",
-      "he": "לונדון",
-      "ja": "ロンドン",
-      "lt": "Londonas",
-      "nl": "London",
-      "pl": "London",
-      "pt": "London",
-      "ru": "Лондон",
-      "sr": "Лондон"
-    },
-    "lat": 42.9834,
-    "lon": -81.233,
-    "country": "CA"
-  },
-  {
-    "name": "London",
-    "local_names": {
-      "ar": "لندن",
-      "ascii": "London",
-      "en": "London",
-      "fa": "لندن، اوهایو",
-      "feature_name": "London",
-      "sr": "Ландон"
-    },
-    "lat": 39.8865,
-    "lon": -83.4483,
-    "country": "US",
-    "state": "OH"
-  },
-  {
-    "name": "London",
-    "local_names": {
-      "ar": "لندن",
-      "ascii": "London",
-      "en": "London",
-      "fa": "لندن، کنتاکی",
-      "feature_name": "London",
-      "sr": "Ландон"
-    },
-    "lat": 37.129,
-    "lon": -84.0833,
-    "country": "US",
-    "state": "KY"
   },
   {
     "name": "London",
@@ -579,83 +509,6 @@ http://api.openweathermap.org/geo/1.0/reverse?lat=51.5098&lon=-0.1180&limit=5&ap
     "lon": -0.0918,
     "country": "GB"
   },
-  {
-    "name": "London",
-    "local_names": {
-      "af": "Londen",
-      "ar": "لندن",
-      "ascii": "London",
-      "az": "London",
-      "bg": "Лондон",
-      "ca": "Londres",
-      "da": "London",
-      "de": "London",
-      "el": "Λονδίνο",
-      "en": "London",
-      "eu": "Londres",
-      "fa": "لندن",
-      "feature_name": "London",
-      "fi": "Lontoo",
-      "fr": "Londres",
-      "gl": "Londres",
-      "he": "לונדון",
-      "hi": "लंदन",
-      "hr": "London",
-      "hu": "London",
-      "id": "London",
-      "it": "Londra",
-      "ja": "ロンドン",
-      "la": "Londinium",
-      "lt": "Londonas",
-      "mk": "Лондон",
-      "nl": "Londen",
-      "no": "London",
-      "pl": "Londyn",
-      "pt": "Londres",
-      "ro": "Londra",
-      "ru": "Лондон",
-      "sk": "Londýn",
-      "sl": "London",
-      "sr": "Лондон",
-      "th": "ลอนดอน",
-      "tr": "Londra",
-      "vi": "Luân Đôn",
-      "zu": "ILondon"
-    },
-    "lat": 51.5085,
-    "lon": -0.1257,
-    "country": "GB"
-  },
-  {
-    "name": "Islington",
-    "local_names": {
-      "ascii": "Islington",
-      "az": "İslinqton",
-      "fa": "ایزلینتن",
-      "feature_name": "Islington",
-      "fr": "District londonien d'Islington",
-      "he": "איזלינגטון",
-      "ja": "イズリントン",
-      "ru": "Ислингтон"
-    },
-    "lat": 51.5362,
-    "lon": -0.103,
-    "country": "GB"
-  },
-  {
-    "name": "Lewisham",
-    "local_names": {
-      "ascii": "Lewisham",
-      "de": "London Borough of Lewisham",
-      "en": "Lewisham",
-      "feature_name": "Lewisham",
-      "fi": "Lewisham",
-      "fr": "Lewisham",
-      "hu": "Lewisham kerület",
-      "nl": "Lewisham",
-      "no": "Lewisham",
-      "ro": "Lewisham"
-    },
     "lat": 51.4535,
     "lon": -0.018,
     "country": "GB"
@@ -667,10 +520,6 @@ http://api.openweathermap.org/geo/1.0/reverse?lat=51.5098&lon=-0.1180&limit=5&ap
       "de": "London Borough of Islington",
       "en": "Islington",
       "feature_name": "Islington",
-      "fr": "Islington",
-      "nl": "Islington",
-      "no": "Islington",
-      "ro": "Islington"
     },
     "lat": 51.547,
     "lon": -0.1094,
