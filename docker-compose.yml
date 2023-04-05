@@ -27,6 +27,7 @@ services:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_BASIC_ENABLED=false
+      - GF_DASHBOARDS_JSON_ENABLED=true
       - GF_ENABLE_GZIP=true
       - GF_USERS_DEFAULT_THEME=dark
       - GF_PATHS_PLUGINS=/var/lib/grafana/plugins
@@ -36,11 +37,14 @@ services:
     volumes:
       - ./provisioning:/etc/grafana/provisioning
       - ./dashboards:/var/lib/grafana/dashboards
-      - grafana_data:/var/lib/grafana  
+      - ./folders:/etc/grafana/provisioning/folders/
       - ./plugins.txt:/plugins.txt
-      - grafana_plugins:/var/lib/grafana/plugins
       - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
-      - ./provisioning/folders/folders.yml:/etc/grafana/provisioning/folders/folders.yml
+      - grafana_data:/var/lib/grafana  
+      - grafana_plugins:/var/lib/grafana/plugins
+      # - ./grafana/folders.yml:/etc/grafana/provisioning/folders/folders.yml
+      # - ./provisioning/folders/folders.yml:/etc/grafana/provisioning/folders/folders.yml
+
 volumes:
   grafana_data:
   grafana_plugins:  
