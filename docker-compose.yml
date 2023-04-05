@@ -19,6 +19,8 @@ services:
   grafana:
     container_name: grafana
     image: grafana/grafana:latest
+    depends_on:
+      - influxdb
     ports:
       - "4000:3000"
     environment:
@@ -38,7 +40,7 @@ services:
       - ./plugins.txt:/plugins.txt
       - grafana_plugins:/var/lib/grafana/plugins
       - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
-
+      - ./provisioning/folders/folders.yml:/etc/grafana/provisioning/folders/folders.yml
 volumes:
   grafana_data:
   grafana_plugins:  

@@ -1,0 +1,10 @@
+apiVersion: 1
+
+providers:
+- name: 'My Folders'
+  folders:
+  - uid: 'folder1'
+    title: 'Folder 1'
+  - uid: 'folder2'
+    title: 'Folder 2'
+    
