@@ -67,6 +67,10 @@ git push -u origin main
 - Volkov Labs specializes in developing plugins to use Grafana as a Platform. Trusted by the Community.
 - 👉 GitHub for issues and questions: https://github.com/VolkovLabs
 
+## Open Weather Map Grafana Dashboard
+
+uses InfluxDB data source
+
 ![Open Weather Map Grafana](images/OpenWeatherMap.jpg)
 
 ## start stand-alone Grafana via docker
