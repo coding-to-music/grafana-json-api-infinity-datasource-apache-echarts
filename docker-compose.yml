@@ -37,18 +37,18 @@ services:
     volumes:
       - ./provisioning:/etc/grafana/provisioning
       - ./dashboards:/var/lib/grafana/dashboards
-      - ./folders:/etc/grafana/provisioning/folders/
+      - ./provisioning/folders:/etc/grafana/provisioning/folders/
       - ./plugins.txt:/plugins.txt
       - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
       - grafana_data:/var/lib/grafana  
       - grafana_plugins:/var/lib/grafana/plugins
-      # - ./grafana/folders.yml:/etc/grafana/provisioning/folders/folders.yml
-      # - ./provisioning/folders/folders.yml:/etc/grafana/provisioning/folders/folders.yml
 
 volumes:
   grafana_data:
   grafana_plugins:  
 
+      # - ./grafana/folders.yml:/etc/grafana/provisioning/folders/folders.yml
+      # - ./provisioning/folders/folders.yml:/etc/grafana/provisioning/folders/folders.yml
       # - ./dist:/var/lib/grafana/plugins/volkovlabs-echarts-panel
 
     # volumes:
