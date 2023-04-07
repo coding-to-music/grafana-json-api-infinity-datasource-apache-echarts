@@ -39,13 +39,13 @@ services:
       - ./configs/grafana/provisioning/datasources.yml:/etc/grafana/provisioning/datasources/provisioning-datasources.yaml:ro
       - ./dashboards/node-metrics.json:/var/lib/grafana/dashboards/node-metrics.json:ro
       - ./dashboards/container-metrics.json:/var/lib/grafana/dashboards/container-metrics.json:ro
-      - ./provisioning:/etc/grafana/provisioning
-      - ./dashboards:/var/lib/grafana/dashboards
-      - ./provisioning/folders:/etc/grafana/provisioning/folders/
+      # - ./provisioning:/etc/grafana/provisioning
+      # - ./dashboards:/var/lib/grafana/dashboards
+      # - ./provisioning/folders:/etc/grafana/provisioning/folders/
       - ./plugins.txt:/plugins.txt
-      - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
-      - grafana_data:/var/lib/grafana  
-      - grafana_plugins:/var/lib/grafana/plugins
+      # - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
+      # - grafana_data:/var/lib/grafana  
+      # - grafana_plugins:/var/lib/grafana/plugins
 
 volumes:
   grafana_data:
