@@ -1,2 +1,0 @@
-grafana-infinity-datasource
-https://github.com/grafana/grafana-json-datasource/releases/download/v3.0.1/grafana-json-datasource-3.0.1.zip
