@@ -1,28 +1,32 @@
 version: "3.7"
 
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "1m"
+    max-file: "1"
+    tag: "{{.Name}}"
+
 services:
-
-  influxdb:
-    image: influxdb:latest
-    restart: always
-    ports:
-      - "8086:8086"
-    environment:
-      - INFLUXDB_DB=mydb
-      - INFLUXDB_ADMIN_USER=admin
-      - INFLUXDB_ADMIN_PASSWORD=password
-      - INFLUXDB_USER=user
-      - INFLUXDB_USER_PASSWORD=password
-    volumes:
-      - ./influxdb:/var/lib/influxdb
-
   grafana:
-    container_name: grafana
     image: grafana/grafana:latest
     depends_on:
-      - influxdb
+      - prometheus
     ports:
-      - "4000:3000"
+      - 4000:3000
+    networks:
+      - monitoring
+    logging: *default-logging
+    volumes:
+      - grafana-data:/var/lib/grafana
+      # - ./dashboards:/etc/grafana/provisioning/dashboards/
+      # - ./datasources:/etc/grafana/provisioning/datasources/
+      # - ./folders:/etc/grafana/provisioning/folders/
+      - ./configs/grafana/provisioning/dashboards.yml:/etc/grafana/provisioning/dashboards/provisioning-dashboards.yaml:ro
+      - ./configs/grafana/provisioning/datasources.yml:/etc/grafana/provisioning/datasources/provisioning-datasources.yaml:ro
+      - ./dashboards/node-metrics.json:/var/lib/grafana/dashboards/node-metrics.json
+      - ./dashboards/container-metrics.json:/var/lib/grafana/dashboards/container-metrics.json
+
     environment:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -32,46 +36,142 @@ services:
       - GF_USERS_DEFAULT_THEME=dark
       - GF_PATHS_PLUGINS=/var/lib/grafana/plugins
       - GF_DEFAULT_APP_MODE=development
+      - GF_INSTALL_PLUGINS=marcusolsson-static-datasource,golioth-websocket-datasource,volkovlabs-echarts-panel,marcusolsson-json-datasource,yesoreyeram-infinity-datasource
       - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/container-metrics.json
-      # - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/provisioning/dashboards/echarts/test.json
-      # - GF_INSTALL_PLUGINS=marcusolsson-static-datasource,golioth-websocket-datasource,volkovlabs-echarts-panel,marcusolsson-json-datasource,yesoreyeram-infinity-datasource,marcusolsson-dynamictext-panel
+
+  prometheus:
+    image: prom/prometheus:${PROMETHEUS_VERSION:-latest}
+    container_name: prometheus
+    restart: unless-stopped
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--log.level=error"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=7d"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
+      - "--web.external-url=http://localhost:9090"
     volumes:
-      # - ./provisioning:/etc/grafana/provisioning
-      # - ./dashboards:/var/lib/grafana/dashboards
-      # - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
-      - ./configs/grafana/provisioning/dashboards.yml:/etc/grafana/provisioning/dashboards/provisioning-dashboards.yaml:ro
-      - ./configs/grafana/provisioning/datasources.yml:/etc/grafana/provisioning/datasources/provisioning-datasources.yaml:ro
-      - ./dashboards/node-metrics.json:/var/lib/grafana/dashboards/node-metrics.json:ro
-      - ./dashboards/container-metrics.json:/var/lib/grafana/dashboards/container-metrics.json:ro
-      - grafana_data:/var/lib/grafana  
-      # - grafana_plugins:/var/lib/grafana/plugins
+      - ./configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./configs/prometheus/recording-rules.yml:/etc/prometheus/recording-rules.yml
+      - ./configs/prometheus/alerting-rules.yml:/etc/prometheus/alerting-rules.yml
+      - prometheus-data:/prometheus
+    depends_on:
+      - alertmanager
+    ports:
+      - 9090:9090
+    networks:
+      - monitoring
+    logging: *default-logging
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:${CADVISOR_VERSION:-latest}
+    container_name: cadvisor
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+        # https://github.com/google/cadvisor/issues/1565#issuecomment-718812180
+      - /var/run/docker.sock:/var/run/docker.sock
+      #- /dev/disk:/dev/disk:ro
+    networks:
+      - monitoring
+    logging: *default-logging
+
+  node-exporter:
+    image: prom/node-exporter:${NODE_EXPORTER_VERSION:-v1.3.1}
+    container_name: node-exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.ignored-mount-points"
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    networks:
+      - monitoring
+    logging: *default-logging
+
+  alertmanager:
+    image: prom/alertmanager:${ALERTMANAGER_VERSION:-latest}
+    container_name: alertmanager
+    command:
+      - "--config.file=/etc/alertmanager/config.yml"
+      - "--log.level=error"
+      - "--storage.path=/alertmanager"
+      - "--web.external-url=http://localhost:9093"
+    volumes:
+      - ./configs/alertmanager/alertmanager-fallback-config.yml:/etc/alertmanager/config.yml
+    ports:
+      - 9093:9093
+    networks:
+      - monitoring
+    logging: *default-logging
+
+  # redis:
+  #   image: redis:${REDIS_VERSION:-6}
+  #   container_name: redis
+  #   ports:
+  #     - 6379:6379
+  #   # cpus: 0.5
+  #   # mem_limit: 512m
+  #   logging: *default-logging
 
 volumes:
-  grafana_data:
-  grafana_plugins:  
+  grafana-data: {}
+  prometheus-data: {}
 
+networks:
+  monitoring:
+    name: monitoring
 
-      # - ./configs/grafana/provisioning/dashboards.yml:/etc/grafana/provisioning/dashboards/provisioning-dashboards.yaml:ro
-      # - ./configs/grafana/provisioning/datasources.yml:/etc/grafana/provisioning/datasources/provisioning-datasources.yaml:ro
-      # - ./dashboards/node-metrics.json:/var/lib/grafana/dashboards/node-metrics.json:ro
-      # - ./dashboards/container-metrics.json:/var/lib/grafana/dashboards/container-metrics.json:ro
+  # influxdb:
+  #   image: influxdb:latest
+  #   restart: always
+  #   ports:
+  #     - "8086:8086"
+  #   environment:
+  #     - INFLUXDB_DB=mydb
+  #     - INFLUXDB_ADMIN_USER=admin
+  #     - INFLUXDB_ADMIN_PASSWORD=password
+  #     - INFLUXDB_USER=user
+  #     - INFLUXDB_USER_PASSWORD=password
+  #   volumes:
+  #     - ./influxdb:/var/lib/influxdb
 
+  # grafana:
+  #   container_name: grafana
+  #   image: grafana/grafana:latest
+  #   depends_on:
+  #     - influxdb
+  #   ports:
+  #     - "4000:3000"
+  #   environment:
+  #     - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+  #     - GF_AUTH_ANONYMOUS_ENABLED=true
+  #     - GF_AUTH_BASIC_ENABLED=false
+  #     - GF_DASHBOARDS_JSON_ENABLED=true
+  #     - GF_ENABLE_GZIP=true
+  #     - GF_USERS_DEFAULT_THEME=dark
+  #     - GF_PATHS_PLUGINS=/var/lib/grafana/plugins
+  #     - GF_DEFAULT_APP_MODE=development
+  #     - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/container-metrics.json
+  #     # - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/provisioning/dashboards/echarts/test.json
+  #     # - GF_INSTALL_PLUGINS=marcusolsson-static-datasource,golioth-websocket-datasource,volkovlabs-echarts-panel,marcusolsson-json-datasource,yesoreyeram-infinity-datasource,marcusolsson-dynamictext-panel
+  #   volumes:
+  #     # - ./provisioning:/etc/grafana/provisioning
+  #     # - ./dashboards:/var/lib/grafana/dashboards
+  #     # - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
+  #     - ./configs/grafana/provisioning/dashboards.yml:/etc/grafana/provisioning/dashboards/provisioning-dashboards.yaml:ro
+  #     - ./configs/grafana/provisioning/datasources.yml:/etc/grafana/provisioning/datasources/provisioning-datasources.yaml:ro
+  #     - ./dashboards/node-metrics.json:/var/lib/grafana/dashboards/node-metrics.json:ro
+  #     - ./dashboards/container-metrics.json:/var/lib/grafana/dashboards/container-metrics.json:ro
+  #     - grafana_data:/var/lib/grafana  
+  #     # - grafana_plugins:/var/lib/grafana/plugins
 
-      # - ./provisioning/folders:/etc/grafana/provisioning/folders/
-      # - ./plugins.txt:/plugins.txt
-      # - ./grafana/folders.yml:/etc/grafana/provisioning/folders/folders.yml
-      # - ./provisioning/folders/folders.yml:/etc/grafana/provisioning/folders/folders.yml
-      # - ./dist:/var/lib/grafana/plugins/volkovlabs-echarts-panel
-
-    # volumes:
-    #   - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
-      # Uncomment to preserve Grafana configuration
-      # - ./data:/var/lib/grafana
-
-      # - GF_INSTALL_PLUGINS=volkovlabs-echarts-panel
-      # - GF_INSTALL_PLUGINS=grafana-infinity-datasource
-      # - GF_INSTALL_PLUGINS=grafana-json-datasource
-
-      # - GF_INSTALL_PLUGINS=grafana-infinity-datasource,volkovlabs-echarts-panel,grafana-json-datasource
-
-      # - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/provisioning/dashboards/home.json
