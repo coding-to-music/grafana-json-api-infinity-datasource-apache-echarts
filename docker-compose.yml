@@ -38,6 +38,8 @@ services:
       - ./provisioning:/etc/grafana/provisioning
       - ./dashboards:/var/lib/grafana/dashboards
       - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
+      - ./configs/grafana/provisioning/dashboards.yml:/etc/grafana/provisioning/dashboards/provisioning-dashboards.yaml:ro
+      - ./configs/grafana/provisioning/datasources.yml:/etc/grafana/provisioning/datasources/provisioning-datasources.yaml:ro
       - grafana_data:/var/lib/grafana  
       - grafana_plugins:/var/lib/grafana/plugins
 
