@@ -28,6 +28,7 @@ services:
       - ./dashboards/container-metrics.json:/var/lib/grafana/dashboards/container-metrics.json
       # - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
       - ./echarts.volkovlabs.io:/var/lib/grafana/dashboards/echarts.json
+      - ./test-dashboards:/var/lib/grafana/dashboards/test-dashboards.json
 
     environment:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
