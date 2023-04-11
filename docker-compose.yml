@@ -18,12 +18,13 @@ services:
       - monitoring
     logging: *default-logging
     volumes:
+      - ./provisioning:/etc/grafana/provisioning
       - grafana-data:/var/lib/grafana
       # - ./dashboards:/etc/grafana/provisioning/dashboards/
-      # - ./datasources:/etc/grafana/provisioning/datasources/
+      - ./datasources:/etc/grafana/provisioning/datasources/
       # - ./folders:/etc/grafana/provisioning/folders/
-      - ./echarts.volkovlabs.io:/var/lib/grafana/dashboards/echarts.json
-      - ./test-dashboards:/var/lib/grafana/dashboards/test-dashboards.json
+      - ./echarts.volkovlabs.io:/var/lib/grafana/dashboards/eCharts
+      - ./test-dashboards:/var/lib/grafana/dashboards/Testing
 
       - ./configs/grafana/provisioning/dashboards.yml:/etc/grafana/provisioning/dashboards/provisioning-dashboards.yaml:ro
       - ./configs/grafana/provisioning/datasources.yml:/etc/grafana/provisioning/datasources/provisioning-datasources.yaml:ro
