@@ -26,6 +26,7 @@ services:
       - ./configs/grafana/provisioning/datasources.yml:/etc/grafana/provisioning/datasources/provisioning-datasources.yaml:ro
       - ./dashboards/node-metrics.json:/var/lib/grafana/dashboards/node-metrics.json
       - ./dashboards/container-metrics.json:/var/lib/grafana/dashboards/container-metrics.json
+      # - ./echarts.volkovlabs.io:/etc/grafana/provisioning/dashboards/echarts
 
     environment:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
