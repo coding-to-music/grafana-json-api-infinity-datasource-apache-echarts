@@ -21,8 +21,6 @@ services:
       - ./provisioning:/etc/grafana/provisioning
       - grafana-data:/var/lib/grafana
       # - ./dashboards:/etc/grafana/provisioning/dashboards/
-      - ./datasources:/etc/grafana/provisioning/datasources/
-      # - ./folders:/etc/grafana/provisioning/folders/
       - ./echarts.volkovlabs.io:/var/lib/grafana/dashboards/eCharts
       - ./test-dashboards:/var/lib/grafana/dashboards/Testing
 
@@ -182,3 +180,5 @@ networks:
   #     - grafana_data:/var/lib/grafana  
   #     # - grafana_plugins:/var/lib/grafana/plugins
 
+      # - ./datasources:/etc/grafana/provisioning/datasources/
+      # - ./folders:/etc/grafana/provisioning/folders/
