@@ -91,6 +91,10 @@ Example Payload:	LAUCN040010000000005
 
 https://api.bls.gov/publicAPI/v2/timeseries/data/LAUCN040010000000005
 
+https://api.bls.gov/publicAPI/v2/timeseries/data//LNS14000000
+
+/LNS14000000
+
 ```json
 {"status":"REQUEST_SUCCEEDED","responseTime":218,"message":[],"Results":{
 "series":
