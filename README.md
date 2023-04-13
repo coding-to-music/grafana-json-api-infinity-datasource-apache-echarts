@@ -251,6 +251,121 @@ return {
 };
 ```
 
+## Add markpoint for Min and Max values
+
+```
+data.series.map((s) => {
+  if (s.refId === "A") {
+    yearA = s.fields.find((f) => f.name === "year").values.buffer;
+    monthA = s.fields.find((f) => f.name === "periodName").values.buffer;
+    valueA = s.fields.find((f) => f.name === "value").values.buffer;
+  }
+});
+
+const month_yearA = monthA.map((d, i) => `${d} ${yearA[i]}`);
+
+return {
+  grid: {
+    bottom: "3%",
+    containLabel: true,
+    left: "3%",
+    right: "4%",
+    top: "4%"
+  },
+  series: [
+    {
+      data: valueA.reverse(),
+      smooth: true,
+      type: "line",
+      markPoint: {
+        data: [
+          {
+            name: "Max",
+            type: "max"
+          },
+          {
+            name: "Min",
+            type: "min"
+          }
+        ]
+      }
+    }
+  ],
+  xAxis: {
+    data: month_yearA.reverse(),
+    type: "category"
+  },
+  yAxis: {
+    type: "value"
+  }
+};
+```
+
+## Add Markpoint font and dots for data points and Zoom
+
+```
+data.series.map((s) => {
+  if (s.refId === "A") {
+    yearA = s.fields.find((f) => f.name === "year").values.buffer;
+    monthA = s.fields.find((f) => f.name === "periodName").values.buffer;
+    valueA = s.fields.find((f) => f.name === "value").values.buffer;
+  }
+});
+
+const month_yearA = monthA.map((d, i) => `${d} ${yearA[i]}`);
+
+return {
+  grid: {
+    bottom: "3%",
+    containLabel: true,
+    left: "3%",
+    right: "4%",
+    top: "4%"
+  },
+  series: [
+    {
+      data: valueA.reverse(),
+      smooth: true,
+      type: "line",
+      markPoint: {
+        data: [
+          {
+            name: "Max",
+            type: "max",
+            label: { fontsize: 19, fontFamily: 'Roboto', color: 'white'},
+            symbolSise: 80,
+            symbolRotate: 20
+          },
+          {
+            name: "Min",
+            type: "min",
+            label: { fontsize: 19, fontFamily: 'Roboto', color: 'white'},
+            symbolSise: 80
+          }
+        ]
+      }
+    }
+  ],
+  xAxis: {
+    data: month_yearA.reverse(),
+    type: "category"
+  },
+  yAxis: {
+    type: "value"
+  },
+  dataZoom: [
+    {
+      show: true,
+      type: 'inside',
+      filterMode: 'none',
+      xAxisIndex: [0],
+      startValue: 0,
+      endValue: 200,
+    }
+  ],
+};
+```
+
 
 # Use the grafana-cli tool to list all installed plugins and data sources in your Grafana instance.
 

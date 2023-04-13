@@ -24,22 +24,22 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 26,
+    "id": 27,
     "links": [],
     "liveNow": false,
     "panels": [
         {
             "datasource": {
                 "type": "marcusolsson-json-datasource",
-                "uid": "2Iv2frYVz"
+                "uid": "aTY3pgE4z"
             },
             "gridPos": {
-                "h": 8,
+                "h": 9,
                 "w": 12,
                 "x": 0,
                 "y": 0
             },
-            "id": 4,
+            "id": 2,
             "options": {
                 "baidu": {
                     "callback": "bmapReady",
@@ -53,7 +53,7 @@
                     "key": "",
                     "plugin": "AMap.Scale,AMap.ToolBar"
                 },
-                "getOption": "const series = data.series.map((s) => {\n  const sData = s.fields.find((f) => f.type === 'number').values.buffer;\n  const sTime = s.fields.find((f) => f.type === 'time').values.buffer;\n\n  return {\n    name: s.refId,\n    type: 'line',\n    showSymbol: false,\n    areaStyle: {\n      opacity: 0.1,\n    },\n    lineStyle: {\n      width: 1,\n    },\n    data: sData.map((d, i) => [sTime[i], d.toFixed(2)]),\n  };\n});\n\n/**\n * Enable Data Zoom by default\n */\nsetTimeout(() => echartsInstance.dispatchAction({\n  type: 'takeGlobalCursor',\n  key: 'dataZoomSelect',\n  dataZoomSelectActive: true,\n}), 500);\n\n/**\n * Update Time Range on Zoom\n */\nechartsInstance.on('datazoom', function (params) {\n  const startValue = params.batch[0]?.startValue;\n  const endValue = params.batch[0]?.endValue;\n  locationService.partial({ from: startValue, to: endValue });\n});\n\nreturn {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'axis',\n  },\n  legend: {\n    left: '0',\n    bottom: '0',\n    data: data.series.map((s) => s.refId),\n    textStyle: {\n      color: 'rgba(128, 128, 128, .9)',\n    },\n  },\n  toolbox: {\n    feature: {\n      dataZoom: {\n        yAxisIndex: 'none',\n        icon: {\n          zoom: 'path://',\n          back: 'path://',\n        },\n      },\n      saveAsImage: {},\n    }\n  },\n  xAxis: {\n    type: 'time',\n  },\n  yAxis: {\n    type: 'value',\n    min: 'dataMin',\n  },\n  grid: {\n    left: '2%',\n    right: '2%',\n    top: '2%',\n    bottom: 24,\n    containLabel: true,\n  },\n  series,\n};",
+                "getOption": "data.series.map((s) => {\n  if (s.refId === \"A\") {\n    yearA = s.fields.find((f) => f.name === \"year\").values.buffer;\n    monthA = s.fields.find((f) => f.name === \"periodName\").values.buffer;\n    valueA = s.fields.find((f) => f.name === \"value\").values.buffer;\n  }\n});\n\nconst month_yearA = monthA.map((d, i) => `${d} ${yearA[i]}`);\n\nreturn {\n  grid: {\n    bottom: \"3%\",\n    containLabel: true,\n    left: \"3%\",\n    right: \"4%\",\n    top: \"4%\"\n  },\n  series: [\n    {\n      data: valueA.reverse(),\n      smooth: true,\n      type: \"line\",\n      markPoint: {\n        data: [\n          {\n            name: \"Max\",\n            type: \"max\",\n            label: { fontsize: 19, fontFamily: 'Roboto', color: 'white' },\n            symbolSise: 80,\n            symbolRotate: 20\n          },\n          {\n            name: \"Min\",\n            type: \"min\",\n            label: { fontsize: 19, fontFamily: 'Roboto', color: 'white' },\n            symbolSise: 80\n          }\n        ]\n      }\n    }\n  ],\n  xAxis: {\n    data: month_yearA.reverse(),\n    type: \"category\"\n  },\n  yAxis: {\n    type: \"value\"\n  },\n  dataZoom: [\n    {\n      show: true,\n      type: 'inside',\n      filterMode: 'none',\n      xAxisIndex: [0],\n      startValue: 0,\n      endValue: 200,\n    }\n  ],\n};\n",
                 "google": {
                     "callback": "gmapReady",
                     "key": ""
@@ -67,13 +67,11 @@
                     "cacheDurationSeconds": 300,
                     "datasource": {
                         "type": "marcusolsson-json-datasource",
-                        "uid": "2Iv2frYVz"
+                        "uid": "aTY3pgE4z"
                     },
                     "fields": [
                         {
-                            "jsonPath": "$.Results.series[0].data[*].year",
-                            "language": "jsonpath",
-                            "name": ""
+                            "jsonPath": "$.Results.series[0].data[*].year"
                         },
                         {
                             "jsonPath": "$.Results.series[0].data[*].periodName",
@@ -92,7 +90,7 @@
                     "urlPath": "/LNS14000000"
                 }
             ],
-            "title": "Unemployment",
+            "title": "Unemployment Rate",
             "type": "volkovlabs-echarts-panel"
         }
     ],
@@ -110,8 +108,8 @@
     },
     "timepicker": {},
     "timezone": "",
-    "title": "Testing JSON API",
-    "uid": "yzjJBrYVz",
-    "version": 7,
+    "title": "Testing Dashboard",
+    "uid": "tqcgPREVz",
+    "version": 1,
     "weekStart": ""
 }
