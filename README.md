@@ -125,107 +125,132 @@ $.Results.series[0].data[*].periodName
 $.Results.series[0].data[*].value
 ```
 
+Below is the  dataframe retrieval
 
 ```
-const series = data.series.map((s) => {
-  const sData = s.fields.find((f) => f.type === 'number').values.buffer;
-  const sTime = s.fields.find((f) => f.type === 'time').values.buffer;
-
-  return {
-    name: s.refId,
-    type: 'line',
-    showSymbol: false,
-    areaStyle: {
-      opacity: 0.1,
-    },
-    lineStyle: {
-      width: 1,
-    },
-    data: sData.map((d, i) => [sTime[i], d.toFixed(2)]),
-  };
+data.series.map((s) => {
+  if (s.refId === "A") {
+    yearA = s.fields.find((f) => f.name === "year").values.buffer;
+    monthA = s.fields.find((f) => f.name === "periodName").values.buffer;
+    valueA = s.fields.find((f) => f.name === "value").values.buffer;
+  }
 });
 
+const month_yearA = monthA.map((d, i) => `${d} ${yearA[i]}`);
 ```
 
+Below is the generic smoothed line from https://echarts.volkovlabs.io/d/tg6gWiKVk/line?orgId=1&editPanel=4
+
 ```
-const series = data.series.map((s) => {
-  const sData = s.fields.find((f) => f.type === 'number').values.buffer;
-  const sTime = s.fields.find((f) => f.type === 'time').values.buffer;
-
-  return {
-    name: s.refId,
-    type: 'line',
-    showSymbol: false,
-    areaStyle: {
-      opacity: 0.1,
-    },
-    lineStyle: {
-      width: 1,
-    },
-    data: sData.map((d, i) => [sTime[i], d.toFixed(2)]),
-  };
-});
-
-/**
- * Enable Data Zoom by default
- */
-setTimeout(() => echartsInstance.dispatchAction({
-  type: 'takeGlobalCursor',
-  key: 'dataZoomSelect',
-  dataZoomSelectActive: true,
-}), 500);
-
-/**
- * Update Time Range on Zoom
- */
-echartsInstance.on('datazoom', function (params) {
-  const startValue = params.batch[0]?.startValue;
-  const endValue = params.batch[0]?.endValue;
-  locationService.partial({ from: startValue, to: endValue });
-});
-
 return {
-  backgroundColor: 'transparent',
-  tooltip: {
-    trigger: 'axis',
+  grid: {
+    bottom: "3%",
+    containLabel: true,
+    left: "3%",
+    right: "4%",
+    top: "4%"
   },
-  legend: {
-    left: '0',
-    bottom: '0',
-    data: data.series.map((s) => s.refId),
-    textStyle: {
-      color: 'rgba(128, 128, 128, .9)',
-    },
-  },
-  toolbox: {
-    feature: {
-      dataZoom: {
-        yAxisIndex: 'none',
-        icon: {
-          zoom: 'path://',
-          back: 'path://',
-        },
-      },
-      saveAsImage: {},
+  series: [
+    {
+      data: [
+        820,
+        932,
+        901,
+        934,
+        1290,
+        1330,
+        1320
+      ],
+      smooth: true,
+      type: "line"
     }
-  },
+  ],
   xAxis: {
-    type: 'time',
+    data: [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun"
+    ],
+    type: "category"
   },
   yAxis: {
-    type: 'value',
-    min: 'dataMin',
-  },
-  grid: {
-    left: '2%',
-    right: '2%',
-    top: '2%',
-    bottom: 24,
-    containLabel: true,
-  },
-  series,
+    type: "value"
+  }
 };
 ```
+
+Now we replace:
+- replace series yAxis data with valueA.reverse() 
+- replace series xAxis data with month_yearA.reverse()
+
+```
+return {
+  grid: {
+    bottom: "3%",
+    containLabel: true,
+    left: "3%",
+    right: "4%",
+    top: "4%"
+  },
+  series: [
+    {
+      data: valueA.reverse(),
+      smooth: true,
+      type: "line"
+    }
+  ],
+  xAxis: {
+    data: month_yearA.reverse(),
+    type: "category"
+  },
+  yAxis: {
+    type: "value"
+  }
+};
+```
+
+Add the dataframe retrieval at the beginning
+
+```
+data.series.map((s) => {
+  if (s.refId === "A") {
+    yearA = s.fields.find((f) => f.name === "year").values.buffer;
+    monthA = s.fields.find((f) => f.name === "periodName").values.buffer;
+    valueA = s.fields.find((f) => f.name === "value").values.buffer;
+  }
+});
+
+const month_yearA = monthA.map((d, i) => `${d} ${yearA[i]}`);
+
+return {
+  grid: {
+    bottom: "3%",
+    containLabel: true,
+    left: "3%",
+    right: "4%",
+    top: "4%"
+  },
+  series: [
+    {
+      data: valueA.reverse(),
+      smooth: true,
+      type: "line"
+    }
+  ],
+  xAxis: {
+    data: month_yearA.reverse(),
+    type: "category"
+  },
+  yAxis: {
+    type: "value"
+  }
+};
+```
+
 
 # Use the grafana-cli tool to list all installed plugins and data sources in your Grafana instance.
 
