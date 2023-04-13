@@ -91,6 +91,8 @@ Example Payload:	LAUCN040010000000005
 
 https://api.bls.gov/publicAPI/v2/timeseries/data/LAUCN040010000000005  -- use this in the browser to test
 
+https://api.bls.gov/publicAPI/v2/timeseries/data/LNS14000000  -- use this in the browser to test
+
 https://api.bls.gov/publicAPI/v2/timeseries/data/  - use this in the datasource - will say Method not allowed
 
 /LAUCN040010000000005 -- don't use this, use Series ID	:	LNS14000000
