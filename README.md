@@ -89,11 +89,11 @@ URL (JSON):	https://api.bls.gov/publicAPI/v2/timeseries/data/
 Payload:	series_id
 Example Payload:	LAUCN040010000000005
 
-https://api.bls.gov/publicAPI/v2/timeseries/data/LAUCN040010000000005
+https://api.bls.gov/publicAPI/v2/timeseries/data/LAUCN040010000000005  -- use this in the browser to test
 
-https://api.bls.gov/publicAPI/v2/timeseries/data//LNS14000000
+https://api.bls.gov/publicAPI/v2/timeseries/data/  - use this in the datasource - will say Method not allowed
 
-/LNS14000000
+/LAUCN040010000000005 -- don't use this, use Series ID	:	LNS14000000
 
 ```json
 {"status":"REQUEST_SUCCEEDED","responseTime":218,"message":[],"Results":{
@@ -104,6 +104,7 @@ https://api.bls.gov/publicAPI/v2/timeseries/data//LNS14000000
 
 ## Unemployment Rate
 
+https://api.bls.gov/publicAPI/v2/timeseries/data/  - use this in the datasource - will say Method not allowed
 
 Series Title	:	(Seas) Unemployment Rate
 Series ID	:	LNS14000000
