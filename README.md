@@ -20,6 +20,7 @@ https://grafana.com/grafana/plugins/marcusolsson-static-datasource/
 
 ```java
 
+
 ```
 
 ## user interfaces:
